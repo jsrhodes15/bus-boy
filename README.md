@@ -1,3 +1,5 @@
+*This package is not ready for prime time, hence the 0.0.1 version number. Stay tuned!*
+
 ## Bus-Boy
 A collection of scripts used to interact with Azure Service Bus
 

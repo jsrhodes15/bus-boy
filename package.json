@@ -1,0 +1,29 @@
+{
+  "name": "bus-boy",
+  "version": "0.0.1",
+  "description": "A collection of scripts used to interact with Azure Service Bus",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsrhodes15/bus-boy.git"
+  },
+  "keywords": [
+    "azure",
+    "node",
+    "javascript",
+    "cli",
+    "azure-service-bus",
+    "node.js",
+    "topics",
+    "subscriptions"
+  ],
+  "author": "Chuck Langford &  Jordan Rhodes",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsrhodes15/bus-boy/issues"
+  },
+  "homepage": "https://github.com/jsrhodes15/bus-boy#readme"
+}
