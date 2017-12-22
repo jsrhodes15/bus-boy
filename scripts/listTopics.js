@@ -1,29 +1,48 @@
-let done;
+const { validateNotEmpty } = require('./library/validation');
 
-function getNext(output, sbConnection, numberOfTopics, skip, count) {
-  let updatedCount = count;
-  sbConnection.listTopics({ top: numberOfTopics, skip }, (error, result) => {
-    if (error) {
-      output(error);
+const NUMBER_OF_TOPICS = 100;
+const TOPIC_SKIP = 0;
+const TOPIC_COUNT = 0;
+
+/**
+ * Gets the next n topics
+ * @param  {object} azureServiceBus - Service Bus Instance
+ * @param  {number} numberOfTopics - Number of topics to get
+ * @param  {number} skip - Number of topics to skip
+ * @param  {number} count - Topic count to start at
+ * @param  {function} onDone - Invoked when we have built all the topics
+ * @param  {function} onError - Invoked on error
+ */
+function getNext(azureServiceBus, numberOfTopics, skip, count, onDone, onError) {
+  let topicCount = count;
+  const topics = [];
+
+  azureServiceBus.listTopics({ top: numberOfTopics, skip }, (error, result) => {
+    if (error) return onError(error);
+
+    result.forEach((topic) => {
+      topics.push(topic.TopicName);
+      topicCount += 1;
+    });
+
+    if (result.length === numberOfTopics) {
+      getNext(azureServiceBus, numberOfTopics, skip + numberOfTopics, topicCount);
     } else {
-      result.forEach((topic) => {
-        output(topic.TopicName);
-        updatedCount += 1;
-      });
-
-      if (result.length === numberOfTopics) {
-        getNext(output, sbConnection, numberOfTopics, skip + numberOfTopics, updatedCount);
-      } else {
-        output(`Total Number of Topics: ${updatedCount}`);
-        done();
-      }
+      return onDone({ topics, topicCount });
     }
   });
 }
 
-function run(output, sbConnection, cb) {
-  done = cb;
-  getNext(output, sbConnection, 100, 0, 0);
+/**
+ * List Topics
+ * @param  {object} azureServiceBus - Service Bus Instance
+ * @return {Promise}
+ */
+function listTopics(azureServiceBus) {
+  return new Promise((resolve, reject) => {
+    validateNotEmpty([azureServiceBus], reject);
+    getNext(azureServiceBus, NUMBER_OF_TOPICS, TOPIC_SKIP, TOPIC_COUNT, resolve, reject);
+  });
 }
 
-module.exports.run = run;
+module.exports.listTopics = listTopics;
