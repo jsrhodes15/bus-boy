@@ -30,3 +30,21 @@ npm -i bus-boy --save
 
 ### Documentation for the _Azure SDK for Node_ can be found here:
 http://azure.github.io/azure-sdk-for-node/
+
+### Basic Usage
+```javascript
+const busBoy = require('bus-boy');
+const azureSb = require('azure-sb');
+
+const connectionString = 'my-service-bus-connection-string';
+const azureServiceBus = azureSb.createServiceBusService(connectionString);
+
+busBoy
+  .subscriptionDetails(azureServiceBus, 'my-topic-name', 'my-subscription')
+  .then(results => {
+    console.log(results);
+  })
+  .catch(error => {
+    console.log(error);
+  });
+  ```
