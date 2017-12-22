@@ -7,7 +7,7 @@ const { validateNotEmpty } = require('./library/validation');
  * @param  {string} subscription - Subscription to use
  * @return {Promise}
  */
-function subscriptionMessageCount(azureServiceBus, topic, subscription) {
+function subscriptionMsgCount(azureServiceBus, topic, subscription) {
   return new Promise((resolve, reject) => {
     validateNotEmpty([azureServiceBus, topic, subscription], reject);
 
@@ -18,4 +18,4 @@ function subscriptionMessageCount(azureServiceBus, topic, subscription) {
   });
 }
 
-module.exports.subscriptionMessageCount = subscriptionMessageCount;
+module.exports.subscriptionMsgCount = subscriptionMsgCount;
