@@ -8,7 +8,8 @@ const listSubscriptions = require('./scripts/listSubscriptions.js');
 const listTopics = require('./scripts/listTopics.js');
 const peekDeadLetter = require('./scripts/peekDeadLetter.js');
 const peekSubscription = require('./scripts/peekSubscription.js');
-const subscriptionMsgCount = require('./scripts/subMsgCount.js');
+const subscriptionDetails = require('./scripts/subscriptionDetails.js');
+const subscriptionMsgCount = require('./scripts/subscriptionMsgCount.js');
 const watchTopic = require('./scripts/watchTopic.js');
 
 module.exports = {
@@ -22,6 +23,7 @@ module.exports = {
   listTopics,
   peekDeadLetter,
   peekSubscription,
+  subscriptionDetails,
   subscriptionMsgCount,
   watchTopic,
 };
