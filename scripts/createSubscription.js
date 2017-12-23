@@ -1,17 +1,23 @@
-function run(output, sbConnection, topic, subscription, cb) {
-  if (!topic || !subscription) {
-    output('Topic and subscription are required.');
-    cb();
-  } else {
-    sbConnection.createSubscription(topic, subscription, (error) => {
-      if (error) {
-        output(error);
-      } else {
-        output(`Subscription ${subscription} created or exists.`);
-        cb();
-      }
+const { validateNotEmpty } = require('./library/validation');
+
+/**
+ * Creates a subscription for a given topic
+ * @param  {object} azureServiceBus - Service Bus Instance
+ * @param  {string} topic - Topic used in subscripton creation
+ * @param  {string} subscription - Subscription to create
+ * @return {Promise}
+ */
+function createSubscription(azureServiceBus, topic, subscription) {
+  return new Promise((resolve, reject) => {
+    validateNotEmpty([azureServiceBus, topic, subscription], reject);
+
+    azureServiceBus.createSubscription(topic, subscription, (error) => {
+      // todo: should only reject if error is not equal to 'subscription exists error'
+      if (error) return reject(error);
+      // subscription is created or exists
+      return resolve(true);
     });
-  }
+  });
 }
 
-module.exports.run = run;
+module.exports.createSubscription = createSubscription;

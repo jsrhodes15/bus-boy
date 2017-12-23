@@ -1,28 +1,25 @@
-function createMessage(output, connection, topic, cb) {
-  // Edit this to reflect the message you want to send
-  const message = {};
+const { validateNotEmpty } = require('./library/validation');
 
-  const msg = {
-    body: JSON.stringify(message),
-  };
+/**
+ * Creates a message for a given topic
+ * @param  {object} azureServiceBus - Service Bus Instance
+ * @param  {string} topic - Topic to publish message on
+ * @param  {object} message - Message to publish
+ * @return {Promise}
+ */
+function createMessage(azureServiceBus, topic, message) {
+  return new Promise((resolve, reject) => {
+    validateNotEmpty([azureServiceBus, topic, message], reject);
 
-  connection.sendTopicMessage(topic, msg,
-    (e) => {
-      if (e) {
-        output(`${e}`);
-      }
-      cb();
+    const topicMessage = {
+      body: JSON.stringify(message),
+    };
+
+    azureServiceBus.sendTopicMessage(topic, topicMessage, (error) => {
+      if (error) return reject(error);
+      return resolve(true);
     });
+  });
 }
 
-function run(output, sbConnection, topic, cb) {
-  if (!topic) {
-    output('You must specify a topic.');
-    cb();
-  } else {
-    output(`Creating message on ${topic}`);
-    createMessage(output, sbConnection, topic, cb);
-  }
-}
-
-module.exports.run = run;
+module.exports.createMessage = createMessage;
