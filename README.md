@@ -48,3 +48,25 @@ busBoy
     console.log(error);
   });
   ```
+
+### Basic Watch Topic Usage
+```javascript
+const busBoy = require('bus-boy');
+const azureSb = require('azure-sb');
+
+const connectionString = 'my-connection-string';
+const azureServiceBus = azureSb.createServiceBusService(connectionString);
+
+const { watchTopic } = busBoy;
+
+// callback to handle messages
+function onMessage(message) {
+  console.log('%O', message);
+}
+
+// stop watching topic after 5 seconds
+setTimeout(() => { watchTopic.onSIGINT(); }, 5000);
+
+// start watching topic
+watchTopic.run(azureServiceBus, topic, onMessage);
+```
