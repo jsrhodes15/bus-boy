@@ -10,7 +10,7 @@ const { peekDeadLetter } = require('./scripts/peekDeadLetter.js');
 const { peekSubscription } = require('./scripts/peekSubscription.js');
 const { subscriptionDetails } = require('./scripts/subscriptionDetails.js');
 const { subscriptionMsgCount } = require('./scripts/subscriptionMsgCount.js');
-const { watchTopic } = require('./scripts/watchTopic.js');
+const watchTopic = require('./scripts/watchTopic.js');
 
 module.exports = {
   createMessage,
