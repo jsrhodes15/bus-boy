@@ -71,20 +71,17 @@ function onSIGINT() {
  * @param  {object} azureServiceBus - Service Bus Instance
  * @param  {string} topic - Topic to use
  * @param  {function} onMessageCallback - Callback to invoke when a message is received
- * @return {Promise}
  */
-function watchTopic(azureServiceBus, topic, onMessageCallback) {
-  return new Promise((resolve, reject) => {
-    validateNotEmpty([azureServiceBus, topic], reject);
+function run(azureServiceBus, topic, onMessageCallback) {
+  validateNotEmpty([azureServiceBus, topic], error => debug(error));
 
-    // set module variables
-    serviceBus = azureServiceBus;
-    topicToWatch = topic;
-    temporarySubscriptionName = `temp-subscription-${Date.now()}`;
+  // set module variables
+  serviceBus = azureServiceBus;
+  topicToWatch = topic;
+  temporarySubscriptionName = `temp-subscription-${Date.now()}`;
 
-    createSubscriptionAndReceiveMessages(azureServiceBus, topic, temporarySubscriptionName, onMessageCallback);
-  });
+  createSubscriptionAndReceiveMessages(azureServiceBus, topic, temporarySubscriptionName, onMessageCallback);
 }
 
-module.exports.watchTopic = watchTopic;
+module.exports.run = run;
 module.exports.onSIGINT = onSIGINT;
