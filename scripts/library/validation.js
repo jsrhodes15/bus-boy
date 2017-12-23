@@ -16,7 +16,7 @@ function validateNotEmpty(params, onError) {
     for (let i = 0; i < params.length; i += 1) {
       const param = params[i];
       if (isEmpty(param)) {
-        onError(new Error(`${param.toString()} is required`));
+        onError(new Error('Required param is missing'));
         break;
       }
     }
