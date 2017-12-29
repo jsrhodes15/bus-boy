@@ -1,5 +1,7 @@
 const { validateNotEmpty } = require('./library/validation');
 
+const SUBSCRIPTION_EXISTS_CODE = 409;
+
 /**
  * Creates a subscription for a given topic
  * @param  {object} azureServiceBus - Service Bus Instance
@@ -12,8 +14,8 @@ function createSubscription(azureServiceBus, topic, subscription) {
     validateNotEmpty([azureServiceBus, topic, subscription], reject);
 
     azureServiceBus.createSubscription(topic, subscription, (error) => {
-      // todo: should only reject if error is not equal to 'subscription exists error'
-      if (error) return reject(error);
+      // do not reject if subscription exists error
+      if (error && error.statusCode !== SUBSCRIPTION_EXISTS_CODE) return reject(error);
       // subscription is created or exists
       return resolve(true);
     });
