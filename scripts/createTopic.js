@@ -11,6 +11,7 @@ function createTopic(azureServiceBus, topic) {
     validateNotEmpty([azureServiceBus, topic], reject);
 
     azureServiceBus.createTopicIfNotExists(topic, (error) => {
+      // this does not throw if topic exists
       if (error) return reject(error);
       // topic is created or exists
       return resolve(true);
