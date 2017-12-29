@@ -1,6 +1,6 @@
 {
   "name": "bus-boy",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A collection of scripts used to interact with Azure Service Bus",
   "main": "index.js",
   "scripts": {
