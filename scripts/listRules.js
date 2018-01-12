@@ -1,18 +1,21 @@
-function run(output, sbConnection, topic, subscription, cb) {
-  if (!topic || !subscription) {
-    output('You must specify a topic and a subscription.');
-    cb();
-  } else {
-    sbConnection.listRules(topic, subscription, (err, rules) => {
-      if (err) {
-        output(err);
-      } else {
-        output(rules);
-      }
+const { validateNotEmpty } = require('./library/validation');
 
-      cb();
+/**
+ * List Rules for a topic / subscription
+ * @param  {object} azureServiceBus - Service Bus Instance
+ * @param  {string} topic - Topic to use
+ * @param  {string} subscription - Subscription to use
+ * @return {Promise}
+ */
+function listRules(azureServiceBus, topic, subscription) {
+  return new Promise((resolve, reject) => {
+    validateNotEmpty([azureServiceBus, topic, subscription], reject);
+
+    azureServiceBus.listRules(topic, subscription, (error, rules) => {
+      if (error) return reject(error);
+      return resolve(rules);
     });
-  }
+  });
 }
 
-module.exports.run = run;
+module.exports.listRules = listRules;

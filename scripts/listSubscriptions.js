@@ -1,30 +1,20 @@
-function run(output, sbConnection, topic, cb) {
-  if (!topic) {
-    output('You must specify a topic.');
-    cb();
-  } else {
-    sbConnection.listSubscriptions(topic, (err, subscriptions) => {
-      if (err) {
-        output(err);
-      } else {
-        output(`TOPIC: ${topic}`);
+const { validateNotEmpty } = require('./library/validation');
 
-        if (subscriptions.length === 0) {
-          output();
-          output('No subscriptions found');
-        } else {
-          output();
-          output(`Total Count: ${subscriptions.length}`);
-        }
+/**
+ * List Subscriptions for a topic
+ * @param  {object} azureServiceBus - Service Bus Instance
+ * @param  {string} topic - Topic to use
+ * @return {Promise}
+ */
+function listSubscriptions(azureServiceBus, topic) {
+  return new Promise((resolve, reject) => {
+    validateNotEmpty([azureServiceBus, topic], reject);
 
-        subscriptions.forEach((subscription) => {
-          output(subscription.SubscriptionName);
-        });
-      }
-
-      cb();
+    azureServiceBus.listSubscriptions(topic, (error, subscriptions) => {
+      if (error) return reject(error);
+      return resolve(subscriptions);
     });
-  }
+  });
 }
 
-module.exports.run = run;
+module.exports.listSubscriptions = listSubscriptions;
