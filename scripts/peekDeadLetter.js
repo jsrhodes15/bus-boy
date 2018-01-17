@@ -7,7 +7,7 @@ const { validateNotEmpty } = require('./library/validation');
  * @param  {string} subscription - Subscription to use
  * @return {Promise}
  */
-function peakDeadLetter(azureServiceBus, topic, subscription) {
+function peekDeadLetter(azureServiceBus, topic, subscription) {
   return new Promise((resolve, reject) => {
     validateNotEmpty([azureServiceBus, topic, subscription], reject);
 
@@ -18,9 +18,9 @@ function peakDeadLetter(azureServiceBus, topic, subscription) {
       (error, message) => {
         if (error) return reject(error);
         return resolve(message);
-      },
+      }
     );
   });
 }
 
-module.exports.peakDeadLetter = peakDeadLetter;
+module.exports.peekDeadLetter = peekDeadLetter;
