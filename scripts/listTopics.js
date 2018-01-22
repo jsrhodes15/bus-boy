@@ -26,7 +26,7 @@ function getNext(azureServiceBus, numberOfTopics, skip, count, onDone, onError) 
     });
 
     if (result.length === numberOfTopics) {
-      getNext(azureServiceBus, numberOfTopics, skip + numberOfTopics, topicCount);
+      getNext(azureServiceBus, numberOfTopics, skip + numberOfTopics, topicCount, onDone, onError);
     } else {
       return onDone({ topics, topicCount });
     }
