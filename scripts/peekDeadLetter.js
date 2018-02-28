@@ -18,7 +18,7 @@ function peekDeadLetter(azureServiceBus, topic, subscription) {
       (error, message) => {
         if (error) return reject(error);
         return resolve(message);
-      }
+      },
     );
   });
 }
