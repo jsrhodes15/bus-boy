@@ -11,6 +11,7 @@ const { peekSubscription } = require('./scripts/peekSubscription.js');
 const { receiveDeadLetter } = require('./scripts/receiveDeadLetter.js');
 const { subscriptionDetails } = require('./scripts/subscriptionDetails.js');
 const { subscriptionMsgCount } = require('./scripts/subscriptionMsgCount.js');
+const { queueMsgCount } = require('./scripts/queueMsgCount');
 const watchTopic = require('./scripts/watchTopic.js');
 
 module.exports = {
@@ -27,5 +28,6 @@ module.exports = {
   receiveDeadLetter,
   subscriptionDetails,
   subscriptionMsgCount,
+  queueMsgCount,
   watchTopic,
 };
