@@ -12,10 +12,10 @@ const TOPIC_COUNT = 0;
  * @param  {number} count - Topic count to start at
  * @param  {function} onDone - Invoked when we have built all the topics
  * @param  {function} onError - Invoked on error
+ * @param  {array} topics - Array to store list of topics
  */
-function getNext(azureServiceBus, numberOfTopics, skip, count, onDone, onError) {
+function getNext(azureServiceBus, numberOfTopics, skip, count, onDone, onError, topics = []) {
   let topicCount = count;
-  const topics = [];
 
   azureServiceBus.listTopics({ top: numberOfTopics, skip }, (error, result) => {
     if (error) return onError(error);
@@ -26,7 +26,7 @@ function getNext(azureServiceBus, numberOfTopics, skip, count, onDone, onError) 
     });
 
     if (result.length === numberOfTopics) {
-      getNext(azureServiceBus, numberOfTopics, skip + numberOfTopics, topicCount);
+      getNext(azureServiceBus, numberOfTopics, skip + numberOfTopics, topicCount, onDone, onError, topics);
     } else {
       return onDone({ topics, topicCount });
     }
