@@ -26,6 +26,7 @@ npm -i bus-boy --save
    `peekSubscription`     - Peeklocks and returns the first retrieved message in the specified subscription.\
    `subscriptionDetails`  - Returns the details of the specified subscription.\
    `subscriptionMsgCount` - Returns the current count of messages in the specified subscription.\
+   `queueMsgCount`        - Returns the current count of messages in the specified queue.\
    `watchTopic`           - Creates a temporary subscription on the configured topic and returns incoming messages.
 
 ### Documentation for the _Azure SDK for Node_ can be found here:
